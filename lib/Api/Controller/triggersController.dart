@@ -6,7 +6,7 @@ import 'package:flutter_coins/Module/Main/Screens/currencyTrigger/cTriggerContro
 import 'package:flutter_coins/utils/constant/constant.dart';
 
 class TriggerApiController {
-  static getTriggersController(String udid) {
+  static getTriggersController() {
     return DioHelper().get(pathTriggersList);
   }
 

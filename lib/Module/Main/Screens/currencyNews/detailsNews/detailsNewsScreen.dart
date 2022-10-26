@@ -22,7 +22,14 @@ class DetailsNewsScreen extends StatelessWidget {
           children: [
           Column(
             children: [
-              Center(child: Text('${tNews!.sTitle}',style: h1textStyle,textAlign: TextAlign.right,)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('${tNews!.sTitle}',style: h1textStyle,textAlign: TextAlign.end,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('${tNews!.dtCreatedDate}',style: h2textStyle,textAlign: TextAlign.end,),
+              ),
               CachedNetworkImage(
                         imageUrl: '${tNews!.sImage}',
                         placeholder: (context, url) =>
@@ -30,7 +37,14 @@ class DetailsNewsScreen extends StatelessWidget {
                         errorWidget: (context, url, error) =>
                              Image.network('https://www.kaspersky.com/content/en-global/images/repository/isc/2021/cryptocurrency_image1_1130490519_670x377px_300dpi.jpg'),
                       ),
-              SingleChildScrollView(child: Text('${tNews!.sDescription}',textAlign: TextAlign.end,textWidthBasis: TextWidthBasis.parent,)),
+      Row(
+             children: [
+               TextButton(onPressed: (){}, child: Text('مشاركة على فيسبوك',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white,fontWeight: FontWeight.bold),textDirection: TextDirection.ltr,)),
+               TextButton(onPressed: (){}, child: Text('مشاركة على تويتر',style: TextStyle(backgroundColor: Colors.lightBlueAccent,color: Colors.white,fontWeight: FontWeight.bold),)),
+                IconButton(onPressed: (){}, icon: Icon(Icons.share))
+             ],
+           ),
+              Text('${tNews!.sDescription}',textAlign: TextAlign.end,textWidthBasis: TextWidthBasis.parent,),
             ],
           ),
          

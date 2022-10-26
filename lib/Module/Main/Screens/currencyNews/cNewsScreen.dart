@@ -31,6 +31,7 @@ class _CNewsScreenState extends State<CNewsScreen> {
                 return Card(
                   shadowColor: Colors.black,
                   child: ListTile(
+
                     trailing: CachedNetworkImage(
                       imageUrl: '${controller.listNews[index].sImage}',
                       placeholder: (context, url) =>
@@ -38,13 +39,14 @@ class _CNewsScreenState extends State<CNewsScreen> {
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.image_not_supported),
                     ),
-                    title: Text('${controller.listNews[index].sTitle}'),
+                    title: Text('${controller.listNews[index].sTitle}',textAlign: TextAlign.end),
                     subtitle: Center(
                         child: Text(
                             '${controller.listNews[index].dtCreatedDate}')),
                     onTap: () {
                       Get.to(()=> DetailsNewsScreen(
                         tNews: TNews(
+                          dtCreatedDate: '${controller.listNews[index].dtCreatedDate}',
                             sTitle: '${controller.listNews[index].sTitle}',
                             sImage: '${controller.listNews[index].sImage}',
                             sDescription:

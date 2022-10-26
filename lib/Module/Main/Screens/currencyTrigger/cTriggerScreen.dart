@@ -1,17 +1,13 @@
-import 'dart:ffi';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_coins/App/app.dart';
 import 'package:flutter_coins/Model/TNewsBaseResponse.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyRates/cRateController.dart';
-import 'package:flutter_coins/Module/Splash/splashScreen.dart';
 import 'package:flutter_coins/utils/constant/constant.dart';
 import 'package:get/get.dart';
-import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+
 
 import '../../../../Model/TCurrencyRatesBaseRespose.dart';
 import 'cTriggerController.dart';
@@ -24,7 +20,6 @@ class CTriggerScreen extends StatefulWidget {
 }
 
 class _CTriggerState extends State<CTriggerScreen> {
-  var u = Uuid();
   // Initial Selected Value
   TCurrency? currencydropdownvalue;
   CurrencyController currencyController = Get.find<CurrencyController>();
@@ -83,7 +78,7 @@ class _CTriggerState extends State<CTriggerScreen> {
                         child: DropdownButton<TCurrency>(
                           borderRadius: BorderRadius.circular(10),
                           isExpanded: true,
-                          underline: Text(''),
+                          underline: const Text(''),
                           autofocus: true,
                           enableFeedback: false,
                           isDense: false,
@@ -216,15 +211,15 @@ class _CTriggerState extends State<CTriggerScreen> {
                                 currencydropdownvalue!.sCode.toString(),
                                 items1.indexOf(typeTriggerdropdownvalue!) + 1,
                                 textEditingController.text,
-                                CurrencyTriggerController.udid.toString(),
+                                App.udid.toString(),
                                 's_pns_token');
-                            setState(() {
+
                               final snackBar = SnackBar(
                                   content: Text('${status.message.toString()}'));
 
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
-                            });
+
                           },
                           child: Text('إضافة تنبيه')),
                       decoration: BoxDecoration(

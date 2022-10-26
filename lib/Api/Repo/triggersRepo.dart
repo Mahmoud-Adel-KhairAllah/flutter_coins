@@ -5,9 +5,9 @@ import '../../Model/TCurrencyRatesBaseRespose.dart';
 
 class TriggerRepo {
   static var instant = TriggerRepo();
-  Future<List<TCurrency>> getTrigeersListRepo(String udid) async {
+  Future<List<TCurrency>> getTrigeersListRepo() async {
     List<TCurrency> listTriggersCurrency = [];
-    var response = await TriggerApiController.getTriggersController(udid);
+    var response = await TriggerApiController.getTriggersController();
     if (response.statusCode == 200) {
       listTriggersCurrency = List<TCurrency>.from(response.data["condition"]
           .map((object) => TCurrency.fromJson(object)));
@@ -30,6 +30,8 @@ class TriggerRepo {
     Status? status;
     var response = await TriggerApiController.deleteTriggerController(id);
     if (response.statusCode == 200) {
+      status = Status.fromJson(response.data['status']);
+    }else if(response.statusCode == 422 ){
       status = Status.fromJson(response.data['status']);
     }
     return status!;

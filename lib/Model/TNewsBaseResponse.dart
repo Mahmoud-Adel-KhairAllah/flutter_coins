@@ -49,8 +49,8 @@ class TNews {
     String? sImage;
     String? sDescription;
     bool? bEnabled;
-    DateTime? dtCreatedDate;
-    DateTime? dtModifiedDate;
+    String? dtCreatedDate;
+    String? dtModifiedDate;
     dynamic? dtDeletedDate;
 
     factory TNews.fromJson(Map<String, dynamic> json) => TNews(
@@ -59,8 +59,8 @@ class TNews {
         sImage: json["s_image"] == null ? null : json["s_image"],
         sDescription: json["s_description"] == null ? null : json["s_description"],
         bEnabled: json["b_enabled"] == null ? null : json["b_enabled"],
-        dtCreatedDate: json["dt_created_date"] == null ? null! : DateTime.parse(json["dt_created_date"]),
-        dtModifiedDate: json["dt_modified_date"] == null ? null! : DateTime.parse(json["dt_modified_date"]),
+        dtCreatedDate: json["dt_created_date"] == null ? null! : json["dt_created_date"],
+        dtModifiedDate: json["dt_modified_date"] == null ? null! : json["dt_modified_date"],
         dtDeletedDate: json["dt_deleted_date"],
     );
 
@@ -70,8 +70,8 @@ class TNews {
         "s_image": sImage == null ? null : sImage,
         "s_description": sDescription == null ? null : sDescription,
         "b_enabled": bEnabled == null ? null : bEnabled,
-        "dt_created_date": dtCreatedDate == null ? null : dtCreatedDate!.toIso8601String(),
-        "dt_modified_date": dtModifiedDate == null ? null : dtModifiedDate!.toIso8601String(),
+        "dt_created_date": dtCreatedDate == null ? null : dtCreatedDate!,
+        "dt_modified_date": dtModifiedDate == null ? null : dtModifiedDate!,
         "dt_deleted_date": dtDeletedDate,
     };
 }

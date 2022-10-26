@@ -17,11 +17,10 @@ class CurrencyTriggerController extends GetxController {
   bool isPostTrigger = false;
   bool isdeleteTrgger = false;
   int pageNumber = 1;
-  static String udid = '1ae86cab0690a366';
-  getTriggers(String udid) async {
+  getTriggers() async {
     isLoadedTrigeers = true;
     update();
-    listTrigeers = await TriggerRepo.instant.getTrigeersListRepo(udid);
+    listTrigeers = await TriggerRepo.instant.getTrigeersListRepo();
 
     isLoadedTrigeers = false;
     update();
@@ -38,7 +37,7 @@ class CurrencyTriggerController extends GetxController {
 
     isPostTrigger = false;
     update();
-    getTriggers(udid);
+    getTriggers();
     return status;
   }
 
@@ -48,30 +47,16 @@ class CurrencyTriggerController extends GetxController {
     update();
     status = await TriggerRepo.instant.deleteTriggerRepo(id);
     isdeleteTrgger = false;
-    getTriggers(udid);
+    getTriggers();
     update();
     return status;
   }
 
-  Future<String?> getId() async {
-    var deviceInfo = DeviceInfoPlugin();
-    if (Platform.isIOS) {
-      // import 'dart:io'
-      var iosDeviceInfo = await deviceInfo.iosInfo;
-      udid = iosDeviceInfo.identifierForVendor!;
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-    } else if (Platform.isAndroid) {
-      var androidDeviceInfo = await deviceInfo.androidInfo;
-      print('${androidDeviceInfo.androidId}androidDeviceInfo.androidId');
-      udid = androidDeviceInfo.androidId!;
-      return androidDeviceInfo.id; // unique ID on Android
-    }
-  }
 
   @override
   void onInit() {
     // TODO: implement onInit
-    getTriggers(udid);
+    getTriggers();
 
     super.onInit();
   }

@@ -57,90 +57,93 @@ class _CRateState extends State<CRateScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: GetBuilder<CurrencyController>(
-        builder: ((controller) => Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                textDirection: TextDirection.ltr,
-                children: [
-                  Text(
-                    'أسعار العملات الإلكترونية',
-                    style: h1textStyle,
-                  ),
-                  Text(
-                    'أخر تحديث:1/1/2000',
-                    style: h2textStyle,
-                  ),
-                  Flexible(
-                    child: controller.isLoadedCurrency == true
-                        ? Center(child: CircularProgressIndicator())
-                        : CustomScrollView(
-                            slivers: [
-                              SliverGrid(
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200.0,
-                                  mainAxisSpacing: 10.0,
-                                  crossAxisSpacing: 10.0,
-                                  childAspectRatio: 1.5,
+        builder: ((controller) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  textDirection: TextDirection.ltr,
+                  children: [
+                    Text(
+                      'أسعار العملات الإلكترونية',
+                      style: h1textStyle,
+                    ),
+                    Text(
+                      'أخر تحديث:1/1/2000',
+                      style: h2textStyle,
+                    ),
+                    Flexible(
+                      child: controller.isLoadedCurrency == true
+                          ? Center(child: CircularProgressIndicator())
+                          : CustomScrollView(
+                              slivers: [
+                                SliverGrid(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200.0,
+                                    mainAxisSpacing: 10.0,
+                                    crossAxisSpacing: 10.0,
+                                    childAspectRatio: 1.5,
+                                  ),
+                                  delegate: SliverChildBuilderDelegate(
+                                    (BuildContext context, int indexgrid) {
+                                      return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              setState(() {
+                                                isvisibalchechbox =
+                                                    !isvisibalchechbox;
+                                                print('isvisibalchechbox');
+                                                print(isvisibalchechbox);
+                                                print('isvisibalchechbox');
+                                                print(indexgrid);
+                                              });
+                                            },
+                                            child: listCurrency.length == 0
+                                                ? addWidget()
+                                                : favorateWidget(indexgrid),
+                                          ));
+                                    },
+                                    childCount: listCurrency.length != 0
+                                        ? listCurrency.length
+                                        : 1,
+                                  ),
                                 ),
-                                delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int indexgrid) {
-                                    return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            setState(() {
-                                              isvisibalchechbox =
-                                                  !isvisibalchechbox;
-                                              print('isvisibalchechbox');
-                                              print(isvisibalchechbox);
-                                              print('isvisibalchechbox');
-                                              print(indexgrid);
-                                            });
-                                          },
-                                          child: listCurrency.length == 0
-                                              ? addWidget()
-                                              : favorateWidget(indexgrid),
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      (BuildContext context, int indexsliver) {
+                                    return SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: CustumRowWidget(),
+                                            ),
+                                            ListViewWidget(currencyController),
+                                          ],
                                         ));
-                                  },
-                                  childCount: listCurrency.length != 0
-                                      ? listCurrency.length
-                                      : 1,
+                                  }, childCount: 1),
                                 ),
-                              ),
-                              SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                    (BuildContext context, int indexsliver) {
-                                  return SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: CustumRowWidget(),
-                                          ),
-                                          ListViewWidget(currencyController),
-                                        ],
-                                      ));
-                                }, childCount: 1),
-                              ),
-                            ],
+                              ],
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          child: InkWell(
+                        onTap: () => Get.to(() => const CurruncyListScreen()),
+                        child: const Center(
+                          child: Text(
+                            'المزيد---->',
+                            style: TextStyle(color: Colors.blue, fontSize: 15),
                           ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        child: InkWell(
-                      onTap: () => Get.to(() => const CurruncyListScreen()),
-                      child: const Center(
-                        child: Text(
-                          'المزيد---->',
-                          style: TextStyle(color: Colors.blue, fontSize: 15),
                         ),
-                      ),
-                    )),
-                  )
-                ])),
+                      )),
+                    )
+                  ]),
+        )),
       ),
     );
   }
