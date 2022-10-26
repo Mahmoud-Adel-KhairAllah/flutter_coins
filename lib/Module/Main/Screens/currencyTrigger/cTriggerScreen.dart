@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_coins/Model/TNewsBaseResponse.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyRates/cRateController.dart';
 import 'package:flutter_coins/Module/Splash/splashScreen.dart';
@@ -190,16 +191,14 @@ class _CTriggerState extends State<CTriggerScreen> {
                                   topRight: Radius.circular(10)),
                               border: Border.all(width: 1)),
                           alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              controller: textEditingController,
-                              onChanged: (value) {
-                                textEditingController.text = value;
-                              },
-                            ),
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                            ],
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            controller: textEditingController,
+
                           ),
                         ),
                       ),
@@ -216,7 +215,7 @@ class _CTriggerState extends State<CTriggerScreen> {
                             Status status= await controller.postTrigger(
                                 currencydropdownvalue!.sCode.toString(),
                                 items1.indexOf(typeTriggerdropdownvalue!) + 1,
-                                currencydropdownvalue!.dValue.toString(),
+                                textEditingController.text,
                                 CurrencyTriggerController.udid.toString(),
                                 's_pns_token');
                             setState(() {
