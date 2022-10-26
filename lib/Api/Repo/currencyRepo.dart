@@ -1,8 +1,6 @@
 import 'package:flutter_coins/Api/Controller/currencyController.dart';
 import 'package:flutter_coins/Model/TCurrencyRatesBaseRespose.dart';
-import 'package:flutter_coins/Module/Main/Screens/currencyRates/cRateController.dart';
-import 'package:get/get.dart';
-import 'package:dio/dio.dart';
+
 
 import '../../Model/TNewsBaseResponse.dart';
 

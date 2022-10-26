@@ -1,16 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_coins/Helper/sharedHelper.dart';
 import 'package:flutter_coins/Model/TCurrencyRatesBaseRespose.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyRates/CurruncyList/curruncyListScreen.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyRates/cRateController.dart';
+import 'package:flutter_coins/Module/Main/mainScreen.dart';
 import 'package:flutter_coins/utils/constant/constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_util.dart';
 
 import '../../../Splash/splashScreen.dart';
+
 
 class CRateScreen extends StatefulWidget {
   CRateScreen({Key? key}) : super(key: key);
@@ -25,20 +28,30 @@ class _CRateState extends State<CRateScreen> {
   bool sv = false;
   List<TCurrency> listCurrency = [];
   CurrencyController currencyController = Get.find<CurrencyController>();
+  var udid = Uuid();
+  getfaveBox() async {
+    Box box = await Hive.openBox('fave');
+    setState(() {
+      for (int i = 0; i < box.length; i++) {
+        TCurrency currency = box.getAt(i);
+        print(
+            '${currency.sName} ${currency.sIcon} ${currency.sCode} ${currency.dTrading} ${currency.sName} ${currency.sIcon} ${currency.sCode} ${currency.dTrading}');
+
+        listCurrency.add(currency);
+      }
+      print(listCurrency.length);
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
-    // getfavo(currencyController.listCurency.length).then((value) {
-    //   if(value.isNotEmpty)listCurrency.addAll(value);
-    // });
-
-    getfavo(currencyController.listCurency.length);
+    setState(()  {
+      getfaveBox();
+     
+    });
   }
-
-  static get indexgrid => null;
 
   @override
   Widget build(BuildContext context) {
@@ -195,45 +208,42 @@ class _CRateState extends State<CRateScreen> {
                   children: [
                     Center(
                         child: Text(controller.listCurency[index].dTrading!)),
-                    isvisibalchechbox == true
-                        ? Checkbox(
-                            value: listCurrency.contains(controller.listCurency[index]),
-                            onChanged: (v) async {
-                              SharedPreferences preferences =
-                                  await SharedPreferences.getInstance();
-                              if (v == true && listCurrency.length < 4) {
-                                if (!listCurrency
-                                    .contains(controller.listCurency[index])) {
-                                  listCurrency
-                                      .add(controller.listCurency[index]);
-                                  preferences.setString('sCode${index}',
-                                      controller.listCurency[index].sCode!);
-                                  preferences.setString('sIcon${index}',
-                                      controller.listCurency[index].sIcon!);
-                                  preferences.setBool('isfav${index}', true);
-                                }
-                              } else if (v == false) {
-                                if (listCurrency
-                                    .contains(controller.listCurency[index]))
-                                  listCurrency
-                                      .remove(controller.listCurency[index]);
-                                preferences.remove('sCode${index}');
-                                preferences.remove('sIcon${index}');
-                                preferences.setBool('isfav${index}', false);
-                              }
-                              print('v');
-                              print(v);
-                              print(listCurrency.length);
-                              print(isvisibalchechbox);
-                              print('v');
+                    if (isvisibalchechbox == true)
+                      Checkbox(
+                          value: listCurrency
+                              .contains(controller.listCurency[index]),
+                          onChanged: (v) async {
+                            Box? box = await Hive.openBox('fave');
 
-                              setState(() {
-                               
-                              });
-                            })
-                        : Container(
-                            width: 0,
-                          ),
+                            print(listCurrency.length);
+                            if (v == true && listCurrency.length < 4) {
+                              if (!listCurrency
+                                  .contains(controller.listCurency[index])) {
+                                listCurrency.add(controller.listCurency[index]);
+                                setState(() {
+                                  box.put('fav${index}',
+                                      controller.listCurency[index]);
+                                });
+                              }
+                            } else if (v == false) {
+                              if (listCurrency
+                                  .contains(controller.listCurency[index]))
+                                setState(() {
+                                  TCurrency currency = box.get('fav${index}');
+                                  listCurrency.remove(currency);
+                                  box.delete('fav${index}');
+                                });
+                            }
+                            print('v');
+                            print(v);
+                            print(listCurrency.length);
+                            print(isvisibalchechbox);
+                            print('v');
+                          })
+                    else
+                      Container(
+                        width: 0,
+                      ),
                   ],
                 ),
               )
@@ -265,7 +275,7 @@ class _CRateState extends State<CRateScreen> {
               height: 40,
               child: ClipOval(
                   child: Image.network(listCurrency[indexgrid].sIcon!))),
-          Text(listCurrency[indexgrid].sCode!)
+          Text(listCurrency[indexgrid].sName!)
         ],
       ),
     );
@@ -304,22 +314,4 @@ class CustumRowWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-List<TCurrency> list = [];
-Future<List<TCurrency>> getfavo(int length) async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-
-  for (int i = 0; i <= length; i++) {
-    String? icon = preferences.getString('sIcon${i}');
-    String? code = preferences.getString('scode${i}');
-    bool? isfav = preferences.getBool('isfav${i}');
-    var currencyfav = TCurrency(isfav: isfav, sIcon: icon, sCode: code);
-    if (currencyfav != null) {
-      list.add(currencyfav);
-      print(currencyfav.isfav);
-    }
-    ;
-  }
-  return list;
 }

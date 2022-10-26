@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyRates/CurruncyList/currencyListController.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyRates/cRatesScreen.dart';
-import 'package:flutter_coins/Module/Main/Screens/currencyAlarm/cAlarmScreen.dart';
+import 'package:flutter_coins/Module/Main/Screens/currencyTrigger/cTriggerController.dart';
+import 'package:flutter_coins/Module/Main/Screens/currencyTrigger/cTriggerScreen.dart';
 import 'package:flutter_coins/Module/Main/Screens/currencyNews/cNewsScreen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
+import '../../Model/TCurrencyRatesBaseRespose.dart';
 import 'Screens/currencyNews/cNewsController.dart';
 import 'Screens/currencyRates/cRateController.dart';
 
@@ -19,11 +22,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final cController = Get.put(CurrencyController());
   final newsController = Get.put(NewsController());
+  final currencyTriggerController = Get.put(CurrencyTriggerController());
   final CurrencyListController currencyListController =
       Get.put(CurrencyListController());
   int _selected = 0;
-  var _screens = [CRateScreen(), CAlarmScreen(), CNewsScreen()];
+  var _screens = [CRateScreen(), CTriggerScreen(), CNewsScreen()];
   var _pageController = PageController();
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

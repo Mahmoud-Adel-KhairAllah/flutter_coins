@@ -42,7 +42,7 @@ class CurrencyListController extends GetxController {
     isLoadedCurrency = true;
     update();
 
-    Map<String, dynamic> map = {'page_count': 20, 'page_Numger': pageNumber};
+    Map<String, dynamic> map = {'i_total_pages': 20, 'i_current_page': pageNumber};
     listCurency = await CurrencyRepo.instant.getCurrencyListRepo(map);
 
     isLoadedCurrency = false;

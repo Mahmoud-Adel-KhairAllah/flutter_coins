@@ -1,9 +1,8 @@
-import 'dart:math';
+
 
 import 'package:flutter_coins/Api/Controller/newsController.dart';
 import 'package:flutter_coins/Model/TNewsBaseResponse.dart';
-import 'package:get/get.dart';
-import 'package:dio/dio.dart';
+
 
 class NewsRepo {
   static var instance = NewsRepo();

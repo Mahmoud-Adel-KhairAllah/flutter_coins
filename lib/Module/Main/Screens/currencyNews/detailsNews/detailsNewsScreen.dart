@@ -9,7 +9,7 @@ import 'package:flutter_coins/utils/constant/constant.dart';
 import '../../../../../Model/TNewsBaseResponse.dart';
 
 class DetailsNewsScreen extends StatelessWidget {
-   DetailsNewsScreen({super.key,this.tNews});
+   DetailsNewsScreen({this.tNews});
   TNews? tNews;
 
   @override

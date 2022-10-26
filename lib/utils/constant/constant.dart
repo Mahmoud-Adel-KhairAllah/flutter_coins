@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../Module/Main/Screens/currencyTrigger/cTriggerController.dart';
+
 String baseUrl = 'https://newline.dev/currency/api/v1/';
 String pathCurrenciesList = 'currencies/list';
 String pathCurrenciesJob = 'currencies/job';
-String pathTriggers = 'triggers/list';
+String pathTriggersList = 'triggers/list';
+String pathAddTrigger = 'triggers';
+String pathDeleteTrigger = 'triggers?id=';
 String pathNewsList = 'news/list';
+String pathFavoritesList = 'Favorites/list';
 String pathById = 'news?id=';
 TextStyle h1textStyle = TextStyle(color: Colors.black, fontSize: 30);
 TextStyle h2textStyle = TextStyle(color: Colors.grey, fontSize: 15);

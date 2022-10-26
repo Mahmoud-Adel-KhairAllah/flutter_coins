@@ -11,7 +11,7 @@ import '../../../../../Model/TCurrencyRatesBaseRespose.dart';
 import '../cRatesScreen.dart';
 
 class CurruncyListScreen extends StatefulWidget {
-  const CurruncyListScreen({super.key});
+  const CurruncyListScreen({key});
 
   @override
   State<CurruncyListScreen> createState() => _CurruncyListScreenState();

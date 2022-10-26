@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
+
 TBaseResponse tBaseResponseFromJson(String str) =>
     TBaseResponse.fromJson(json.decode(str));
 
@@ -36,9 +38,9 @@ class TBaseResponse {
       };
 }
 
-class TCurrency {
+@HiveType(typeId: 0)
+class TCurrency extends HiveObject {
   TCurrency({
-    this.isfav,
     this.pkIId,
     this.sCode,
     this.sName,
@@ -49,18 +51,31 @@ class TCurrency {
     this.dtCreatedDate,
     this.dtModifiedDate,
     this.dtDeletedDate,
+    this.i_type
   });
-  bool? isfav;
+
+  @HiveField(0)
   int? pkIId;
+  @HiveField(1)
   String? sCode;
+  @HiveField(2)
   String? sName;
+  @HiveField(3)
   String? dValue;
+  @HiveField(4)
   String? dTrading;
+  @HiveField(5)
   String? sIcon;
+  @HiveField(6)
   bool? bEnabled;
+  @HiveField(7)
   String? dtCreatedDate;
+  @HiveField(8)
   String? dtModifiedDate;
+  @HiveField(9)
   dynamic dtDeletedDate;
+  @HiveField(99)
+  String? i_type;
 
   factory TCurrency.fromJson(Map<String, dynamic> json) => TCurrency(
         pkIId: json["pk_i_id"],
@@ -73,10 +88,11 @@ class TCurrency {
         dtCreatedDate: json["dt_created_date"],
         dtModifiedDate: json["dt_modified_date"],
         dtDeletedDate: json["dt_deleted_date"],
+        i_type: json["i_type"]
       );
 
   Map<String, dynamic> toJson() => {
-        "pk_i_id": pkIId == null ? null : pkIId,
+        "pk_i_id": pkIId == null ? null  : pkIId,
         "s_code": sCode == null ? null : sCode,
         "s_name": sName == null ? null : sName,
         "d_value": dValue == null ? null : dValue,
@@ -86,6 +102,7 @@ class TCurrency {
         "dt_created_date": dtCreatedDate == null ? null : dtCreatedDate,
         "dt_modified_date": dtModifiedDate == null ? null : dtModifiedDate,
         "dt_deleted_date": dtDeletedDate,
+        "i_type":i_type == null ? null : i_type
       };
 }
 
